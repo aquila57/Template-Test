@@ -89,7 +89,9 @@ To install the GNU Scientific Library, use the following
 commands.
 
 apt-get install libgsl-dev
+
 apt-get install libgsl2
+
 apt-get install gsl-ref-html        # for documentation
 
 dietmplt.c contains a template test of generators produced by
