@@ -1,0 +1,185 @@
+Testing instructions for all the template programs in this
+repository.
+
+General description of all template programs.
+
+An overlapping list of random tokens is matched against
+a random template.  The random template is the first 1024
+tokens produced by the random number generator.  The output
+of each program is a chi square test based on the overlapping
+list of tokens matched against the template.  A wrap-around
+error occurs, when 1024 tokens match against the template.
+The seeds used in these tests are based on the current date,
+time, and number of ticks.
+
+If a random number generator has a short period length, a
+wrap-around error occurs, when the period length is reached.
+A 16 bit generator usually reaches its period length within
+65536 generations.  The number of samples in these programs
+is 10 million.  Therefore it is expected that a 16 bit generator
+will produce a wrap-around error in these tests.
+
+--------
+
+Program by program testing instructions.
+
+Fibonacci random number generator
+
+Run fibotmplt to apply the template test to the fibonacci
+random number generator.  There is no parameter.
+
+./fibotmplt
+
+The expected result from this program is a failing P-value
+of 1.0.  The fibonacci random number generator is a weak
+generator.  It does not pass many random number tests.
+
+--------
+
+64 bit LFSR random number generator
+
+Run lfsr to apply the template test to the 64 bit LFSR
+random number generator.  There is no parameter.
+
+./lfsr
+
+The expected result from this program is a failing P-value
+of 1.0.  The LFSR random number generator is a weak
+generator.  It does not pass many random number tests.
+
+--------
+
+16 bit LFSR random number generator
+
+Run lfsr to apply the template test to the 16 bit LFSR
+random number generator.  There is no parameter.
+
+./lfsr16
+
+The expected result from this program is a wrap-around
+error.  The 16 bit LFSR random number generator is a weak
+generator.  It does not pass many random number tests.
+
+--------
+
+32 bit RANDU random number generator
+
+Run randu to apply the template test to the 32 bit RANDU
+random number generator.  There is no parameter.
+
+./randu
+
+The expected result from this program is a failing P-value
+of 1.0.  The RANDU random number generator is a weak
+generator.  It does not pass many random number tests.
+The period length of the 32 bit RANDU random number generator
+is 536870912 generations.  The wrap-around error does not
+occur in this test.
+
+--------
+
+16 bit RANDU random number generator
+
+Run randu16 to apply the template test to the 16 bit RANDU
+random number generator.  There is no parameter.
+
+./randu16 
+
+The expected result from this program is a wrap-around
+error.  The 16 bit RANDU random number generator is a weak
+generator.  It does not pass many random number tests.
+
+This test produces a wrap-around error after 17408 generations.
+The period length for the 16 bit RANDU generator is 16384
+generations.  16384 + 1024 = 17408.
+
+--------
+
+eegl64 random number generator
+
+Run tmplt to apply the template test to the eegl64 uniform
+random number generator.  There is no parameter.
+
+./tmplt 
+
+This test is expected to pass the chi square test and not
+to wrap around.  The period length of the eegl64 generator
+approximates 1.2 * 10^61036 generations.  That is longer than
+the 10 million samples in this test.
+
+--------
+
+GNU Scientific Library random number generators
+
+Run gsltmplt.sh to apply the template test to the GNU Scientific
+Library collection of random number generators.  There is one
+parameter, the name of the GSL generator.
+
+./gsltmplt.sh RNG_name 
+
+Example,
+
+./gsltmplt.sh taus2
+
+This example runs the template test on the GSL taus2 random
+number generator.
+
+To find a list of valid GSL random number generators, enter
+a parameter that produces an error.
+
+./gsltmplt.sh xyz
+
+See README.md for a list of valid GSL random number generators.
+
+This test is expected to pass the chi square test and not
+to wrap around, except for two generators.  The randu and slatec
+generators fail the template test.  The randu generator fails
+the chi square test.  The slatec generator wraps around.
+
+--------
+
+Dieharder package random number generators
+
+Run dietmplt.sh to apply the template test to the dieharder
+collection of random number generators.  There is one
+parameter, the name of the dieharder generator.
+
+./dietmplt.sh RNG_name 
+
+Example,
+
+./dietmplt.sh 053
+
+This example runs the template test on the dieharder taus2
+random number generator.
+
+To find a list of valid dieharder random number generators,
+enter the following dieharder command.
+
+dieharder -g -l
+
+See README.dieharder for a list of valid dieharder random
+number generators.
+
+This test is expected to pass the chi square test and not
+to wrap around, except for three generators.  The randu
+generator, 041, fails the chi square test.  The uni generator,
+057, fails the chi square test.  The XOR generator, 207, aborts
+with a segmentation error in dieharder.  dietmplt.c produces
+an end of file message.
+
+Each dieharder generator has a maximum integer limit for the
+numbers produced.  Therefore the dietmplt.c program running
+the template test incorporates a table of maximum integers
+for each generator.  Without this table, the majority of dieharder
+generators fail the template test.
+
+--------
+
+Submit more template tests.
+
+If you have a random number generator not included in this
+repository, you are welcome to add more template test programs
+to this repository.
+
+--------
