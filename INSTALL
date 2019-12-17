@@ -19,6 +19,10 @@ Make shell scripts executable.
 
 chmod 755 *.sh
 
+Make Python programs executable.
+
+chmod 755 *.py
+
 Next compile the programs.
 
 ./inst.sh
