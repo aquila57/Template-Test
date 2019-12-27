@@ -35,6 +35,7 @@ OBJ=dietmplt.o \
 	tally.o \
 	calcchi.o \
 	freeall.o \
+	diepfx.o \
 	getdie.o \
 	getbyte.o
 
@@ -82,6 +83,9 @@ calcchi.o:			calcchi.c
 
 freeall.o:			freeall.c
 		$(CC) $(CFLAGS) freeall.c
+
+diepfx.o:			diepfx.c
+		$(CC) $(CFLAGS) diepfx.c
 
 getdie.o:			getdie.c
 		$(CC) $(CFLAGS) getdie.c

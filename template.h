@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 #include <sys/times.h>
 #include <time.h>
 #include <math.h>
@@ -141,6 +142,9 @@ void tally(xxfmt *xx);
 
 /* run a chi square test on the tally array */
 void calcchi(xxfmt *xx);
+
+/* bypass Dieharder prefix */
+void diepfx(xxfmt *xx);
 
 /* read one line from Dieharder */
 int getdie(xxfmt *xx);

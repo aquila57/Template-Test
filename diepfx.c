@@ -1,4 +1,4 @@
-/* getdie.c - Read one line from Dieharder  Version 0.1.0 */
+/* diepfx.c - Bypass Dieharder prefix  Version 0.1.0 */
 /* Copyright (C) 2019 aquila57 at github.com */
 
 /* This program is free software; you can redistribute it and/or     */
@@ -21,7 +21,7 @@
 #include "template.h"
 #include <errno.h>
 
-/* Read one line of random output from Dieharder      */
+/* Bypass Dieharder prefix                            */
 /* The Dieharder command to produce random output is: */
 /* dieharder -g nnn -t sss -o                         */
 /* where nnn is the number of the Dieharder random    */
@@ -30,37 +30,65 @@
 /* The output from Dieharder is in ASCII format.      */
 /* Dieharder writes one line per 32-bit generation    */
 /* of output.                                         */
-/* The output of getdie() is an integer from zero     */
-/* to MAXINT.                                         */
+/* The prefix ends with numbit: 32                    */
 
-int getdie(xxfmt *xx)
+void diepfx(xxfmt *xx)
    {
    int len;
-   double num;
-   double frac;
-   int i;
    char buf[256];
+   while (1)
+      {
+      int rslt;
+      len = scanf("%s", buf);
+      if (len < 1)
+         {
+         if (feof(stdin))
+	    {
+	    fprintf(stderr,"diepfx: end of "
+	       "file, len %d\n", len);
+	    exit(1);
+	    } /* if end of file */
+         if (ferror(stdin))
+            {
+            perror("diepfx: read error\n");
+            exit(1);
+            } /* read error */
+         fprintf(stderr,"diepfx: blank line\n");
+         exit(1);
+         } /* if eof or read error */
+      if (len > 1)
+         {
+         fprintf(stderr,"diepfx: read error\n");
+         fprintf(stderr,"scanf read more than "
+            "one token %d\n", len);
+         exit(1);
+         } /* invalid input */
+      rslt = strcmp(buf,"numbit:");
+      if (!rslt) break;
+      } /* for each token in prefix */
+   /* bypass the 32 in "numbit: 32" */
    len = scanf("%s", buf);
    if (len < 1)
       {
-      if (feof(stdin)) return(EOF);
+      if (feof(stdin))
+	 {
+	 fprintf(stderr,"diepfx: end of file "
+	    "readint 32, len %d\n", len);
+	 exit(1);
+	 } /* if end of file */
       if (ferror(stdin))
          {
-         perror("getdie: read error\n");
+         perror("diepfx: read error\n");
          exit(1);
          } /* read error */
-      fprintf(stderr,"getdie: blank line\n");
+      fprintf(stderr,"diepfx: blank line\n");
       exit(1);
       } /* if eof or read error */
    if (len > 1)
       {
-      fprintf(stderr,"getdie: read error\n");
+      fprintf(stderr,"diepfx: read error\n");
       fprintf(stderr,"scanf read more than "
          "one token %d\n", len);
       exit(1);
       } /* invalid input */
-   num = atof(buf);
-   frac = num / xx->maxint;
-   i = (int) floor(frac * xx->dbllmt);
-   return(i);
-   } /* getdie */
+   } /* diepfx */

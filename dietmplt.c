@@ -154,15 +154,7 @@ int main(int argc, char **argv)
       putstx(*argv);
       } /* invalid generator */
    xx->maxint = xx->maxint_tbl[xx->generator];
-   /****************************************************/
-   /* initialize the random number generator           */
-   /****************************************************/
-   gsl_rng_env_setup();
-   xx->typ = (gsl_rng_type *) gsl_rng_default;
-   xx->rng = (gsl_rng *) gsl_rng_alloc(xx->typ);
-   /* allocate GSL random number generator to set initial */
-   /* values in the three fibonacci numbers               */
-   gsl_rng_set(xx->rng, xx->dttk);
+   diepfx(xx);    /* bypass dieharder prefix */
    /****************************************************/
    bldtmplt(xx);   /* build template queue */
    if (!xx->eofsw) bldlst(xx);   /* build sample queue */
