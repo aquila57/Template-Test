@@ -1,4 +1,4 @@
-/* eeglinit.c - eegl RNG initialization Version 2.0.0                */
+/* eeglstrt.c - eegl RNG initialization Version 2.0.0                */
 /* Copyright (C) 2019 aquila57 at github.com                         */
 
 /* This program is free software; you can redistribute it and/or     */
@@ -30,12 +30,11 @@
 /* lfsr_table.pdf                                       */
 /********************************************************/
 
-/***********************************************************/
-/* This initialization routine is based on date/time/ticks */
-/* RNG is an acronym for random number generator           */
-/* To do regression testing, use eeglstrt(seed)            */
-/* instead of this initialization routine.                 */ 
-/***********************************************************/
+/* This initialization routine is based on an input parameter */
+/* Use this routine instead of eeglinit() for compiling */
+/* on Windows using the mingw compiler */
+/* This initialization routine may be used for regression testing */
+/* RNG is an acronym for random number generator */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -50,19 +49,15 @@
 
 void eeglcrct(eefmt *ee);
 
-eefmt *eeglinit(void)
+eefmt *eeglstrt(unsigned int seed)
    {
    int i;
-   unsigned int dttk;          /* combined date and #ticks */
-   unsigned int *stp,*stq;     /* pointers into state array */
    unsigned char str[16];      /* string to crc */
-   time_t now;                 /* current date and time */
-   clock_t clk;                /* current number of ticks */
-   struct tms t;               /* structure used by times() */
+   unsigned int *stp,*stq;     /* pointers into state array */
    eefmt *ee;                  /* eegl structure */
 
    /***************************************************/
-   /* allocate memory for eegl structure              */
+   /* allocate memory for eegl structure */
    /***************************************************/
    ee = (eefmt *) malloc(sizeof(eefmt));
    if (ee == NULL)
@@ -86,26 +81,12 @@ eefmt *eeglinit(void)
       } /* out of memory */
 
    /***************************************************/
-   /* initialize the first LFSR to date/time/ticks    */
+   /* initialize the first LFSR to input parameter    */
    /***************************************************/
    eeglcrct(ee);      /* initialize crc table */
-   /* get clock ticks since boot                       */
-   clk = times(&t);
-   /* get date & time                                  */
-   time(&now);
-   /* combine date, time, and ticks into a single UINT */
-   dttk = (unsigned int) (now ^ clk);
-   /* initialize the first seed to date,time,#ticks    */
-   ee->seed = dttk | 1;   /* initial seed = curr date & time */
-   /***************************************************/
-   /* Create an 8 byte random string to use for       */
-   /* calculating a random crc32.                     */
-   /* Assign the crc32 to fibo1                       */
-   /***************************************************/
-   ee->seed *= EMM;    /* warm up the seed */
-   ee->seed *= EMM;    /* warm up the seed */
-   ee->seed *= EMM;    /* warm up the seed */
-   ee->seed *= EMM;    /* warm up the seed */
+   ee->seed = seed | 1;   /* initial seed = parm */
+   i = 256;    /* warm up ee->seed 256 times */
+   while (i--) ee->seed *= EMM;    /* warm up ee->seed */
    str[0] = (ee->seed >> 24) & 255;
    ee->seed *= EMM;
    str[1] = (ee->seed >> 24) & 255;
@@ -122,11 +103,6 @@ eefmt *eeglinit(void)
    ee->seed *= EMM;
    str[7] = (ee->seed >> 24) & 255;
    ee->fibo1 = eeglcrc(ee,str,8);
-   /***************************************************/
-   /* Create an 8 byte random string to use for       */
-   /* calculating a random crc32.                     */
-   /* Assign the crc32 to fibo2                       */
-   /***************************************************/
    ee->seed *= EMM;
    str[0] = (ee->seed >> 24) & 255;
    ee->seed *= EMM;
@@ -144,11 +120,6 @@ eefmt *eeglinit(void)
    ee->seed *= EMM;
    str[7] = (ee->seed >> 24) & 255;
    ee->fibo2 = eeglcrc(ee,str,8);
-   /*****************************************************/
-   /* assign fibo3, we are now ready to assign          */
-   /* the entire eegl state                             */
-   /* eeglsd() creates a random 32 bit unsigned integer */
-   /*****************************************************/
    ee->fibo3 = ee->fibo1 + ee->fibo2;
    ee->major = ee->lfsr0 = eeglsd(ee);
    ee->minor = ee->lfsr  = eeglsd(ee);
@@ -183,9 +154,9 @@ eefmt *eeglinit(void)
 
    /***************************************************/
    /* To do regression testing, use eeglstrt(seed)    */
-   /* instead of this initialization routine.         */ 
+   /* instead of this routine.                        */ 
    /***************************************************/
    /* return the eegl structure                       */
    /***************************************************/
    return(ee);
-   } /* eeglinit subroutine */
+   } /* eeglstrt subroutine */

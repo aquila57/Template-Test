@@ -18,65 +18,19 @@
    #  59 Temple Place - Suite 330
    #  Boston, MA 02111-1307, USA.
 
-#--------------------------------------------------------
-# The LFSR in this generator comes from the following
-# http://courses.cse.tamu.edu/walker/csce680/
-# lfsr_table.pdf
-#--------------------------------------------------------
-
-OBJ=lfsr16.o \
-	qsetup.o \
-	qinit.o \
-	pushq.o \
-	popq.o \
-	shwqueue.o \
-	shwlist.o \
-	shwactual.o \
-	tally.o \
-	calcchi.o \
-	freeall.o
+OBJ=lfsr16.o
 
 CC=gcc
 
 CFLAGS=-c -Wall -O2
 
-LDFLAGS=-lgsl -lgslcblas -lm
+LDFLAGS=-L. -ltmplt -lgsl -lgslcblas -lm
 
 lfsr16:				$(OBJ)
 		$(CC) -Wall -O2 $(OBJ) -o lfsr16 $(LDFLAGS)
 
 lfsr16.o:			lfsr16.c
 		$(CC) $(CFLAGS) lfsr16.c
-
-qsetup.o:			qsetup.c
-		$(CC) $(CFLAGS) qsetup.c
-
-qinit.o:			qinit.c
-		$(CC) $(CFLAGS) qinit.c
-
-pushq.o:			pushq.c
-		$(CC) $(CFLAGS) pushq.c
-
-popq.o:				popq.c
-		$(CC) $(CFLAGS) popq.c
-
-shwqueue.o:			shwqueue.c
-		$(CC) $(CFLAGS) shwqueue.c
-
-shwlist.o:			shwlist.c
-		$(CC) $(CFLAGS) shwlist.c
-
-shwactual.o:			shwactual.c
-		$(CC) $(CFLAGS) shwactual.c
-
-tally.o:			tally.c
-		$(CC) $(CFLAGS) tally.c
-
-calcchi.o:			calcchi.c
-		$(CC) $(CFLAGS) calcchi.c
-
-freeall.o:			freeall.c
-		$(CC) $(CFLAGS) freeall.c
 
 clean:
 		rm -f $(OBJ) lfsr16

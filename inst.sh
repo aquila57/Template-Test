@@ -1,4 +1,6 @@
 #!/bin/bash
+make -f eegllib.mak
+make -f libtmplt.mak
 make -f tmplt.mak
 make -f gsltmplt.mak
 make -f dietmplt.mak

@@ -26,71 +26,19 @@
 # to 64
 #--------------------------------------------------------
 
-OBJ=tmplt.o \
-	qsetup.o \
-	qinit.o \
-	pushq.o \
-	popq.o \
-	shwqueue.o \
-	shwlist.o \
-	shwactual.o \
-	tally.o \
-	calcchi.o \
-	freeall.o \
-	eeglinit.o \
-	eegl.o \
-	eeglpwr.o
+OBJ=tmplt.o
 
 CC=gcc
 
 CFLAGS=-c -Wall -O2
 
-LDFLAGS=-lgsl -lgslcblas -lm
+LDFLAGS=-L. -leegl -L. -ltmplt -lgsl -lgslcblas -lm
 
 tmplt:				$(OBJ)
 		$(CC) -Wall -O2 $(OBJ) -o tmplt $(LDFLAGS)
 
 tmplt.o:			tmplt.c
 		$(CC) $(CFLAGS) tmplt.c
-
-qsetup.o:			qsetup.c
-		$(CC) $(CFLAGS) qsetup.c
-
-qinit.o:			qinit.c
-		$(CC) $(CFLAGS) qinit.c
-
-pushq.o:			pushq.c
-		$(CC) $(CFLAGS) pushq.c
-
-popq.o:				popq.c
-		$(CC) $(CFLAGS) popq.c
-
-shwqueue.o:			shwqueue.c
-		$(CC) $(CFLAGS) shwqueue.c
-
-shwlist.o:			shwlist.c
-		$(CC) $(CFLAGS) shwlist.c
-
-shwactual.o:			shwactual.c
-		$(CC) $(CFLAGS) shwactual.c
-
-tally.o:			tally.c
-		$(CC) $(CFLAGS) tally.c
-
-calcchi.o:			calcchi.c
-		$(CC) $(CFLAGS) calcchi.c
-
-freeall.o:			freeall.c
-		$(CC) $(CFLAGS) freeall.c
-
-eeglinit.o:			eeglinit.c
-		$(CC) $(CFLAGS) eeglinit.c
-
-eegl.o:				eegl.c
-		$(CC) $(CFLAGS) eegl.c
-
-eeglpwr.o:			eeglpwr.c
-		$(CC) $(CFLAGS) eeglpwr.c
 
 clean:
 		rm -f $(OBJ) tmplt

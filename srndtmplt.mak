@@ -1,5 +1,5 @@
-#  sintmplt.mak - Compile sintmplt.c Version 0.1.0
-#  Copyright (C) 2019-2020 aquila57 at github.com
+#  srndtmplt.mak - Compile srndtmplt.c Version 0.1.0
+#  Copyright (C) 2019 aquila57 at github.com
 
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License as
@@ -18,7 +18,7 @@
    #  59 Temple Place - Suite 330
    #  Boston, MA 02111-1307, USA.
 
-OBJ=sintmplt.o
+OBJ=srndtmplt.o
 
 CC=gcc
 
@@ -26,11 +26,11 @@ CFLAGS=-c -Wall -O2
 
 LDFLAGS=-L. -leegl -L. -ltmplt -lgsl -lgslcblas -lm
 
-sintmplt:			$(OBJ)
-		$(CC) -Wall -O2 $(OBJ) -o sintmplt $(LDFLAGS)
+srndtmplt:			$(OBJ)
+		$(CC) -Wall -O2 $(OBJ) -o srndtmplt $(LDFLAGS)
 
-sintmplt.o:			sintmplt.c
-		$(CC) $(CFLAGS) sintmplt.c
+srndtmplt.o:			srndtmplt.c
+		$(CC) $(CFLAGS) srndtmplt.c
 
 clean:
-		rm -f $(OBJ) sintmplt
+		rm -f $(OBJ) srndtmplt

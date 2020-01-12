@@ -23,75 +23,19 @@
 # run dietmplt.sh to run this program
 #--------------------------------------------------------
 
-OBJ=dietmplt.o \
-	bld_maxint.o \
-	qsetup.o \
-	qinit.o \
-	pushq.o \
-	popq.o \
-	shwqueue.o \
-	shwlist.o \
-	shwactual.o \
-	tally.o \
-	calcchi.o \
-	freeall.o \
-	diepfx.o \
-	getdie.o \
-	getbyte.o
+OBJ=dietmplt.o
 
 CC=gcc
 
 CFLAGS=-c -Wall -O2
 
-LDFLAGS=-lgsl -lgslcblas -lm
+LDFLAGS=-L. -ltmplt -lgsl -lgslcblas -lm
 
 dietmplt:			$(OBJ)
 		$(CC) -Wall -O2 $(OBJ) -o dietmplt $(LDFLAGS)
 
 dietmplt.o:			dietmplt.c
 		$(CC) $(CFLAGS) dietmplt.c
-
-bld_maxint.o:			bld_maxint.c
-		$(CC) $(CFLAGS) bld_maxint.c
-
-qsetup.o:			qsetup.c
-		$(CC) $(CFLAGS) qsetup.c
-
-qinit.o:			qinit.c
-		$(CC) $(CFLAGS) qinit.c
-
-pushq.o:			pushq.c
-		$(CC) $(CFLAGS) pushq.c
-
-popq.o:				popq.c
-		$(CC) $(CFLAGS) popq.c
-
-shwqueue.o:			shwqueue.c
-		$(CC) $(CFLAGS) shwqueue.c
-
-shwlist.o:			shwlist.c
-		$(CC) $(CFLAGS) shwlist.c
-
-shwactual.o:			shwactual.c
-		$(CC) $(CFLAGS) shwactual.c
-
-tally.o:			tally.c
-		$(CC) $(CFLAGS) tally.c
-
-calcchi.o:			calcchi.c
-		$(CC) $(CFLAGS) calcchi.c
-
-freeall.o:			freeall.c
-		$(CC) $(CFLAGS) freeall.c
-
-diepfx.o:			diepfx.c
-		$(CC) $(CFLAGS) diepfx.c
-
-getdie.o:			getdie.c
-		$(CC) $(CFLAGS) getdie.c
-
-getbyte.o:			getbyte.c
-		$(CC) $(CFLAGS) getbyte.c
 
 clean:
 		rm -f $(OBJ) dietmplt
