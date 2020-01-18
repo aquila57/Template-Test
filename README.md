@@ -56,6 +56,13 @@ produce a wrap-around error.  The period length of the eegl64
 generator approximates 1.2 * 10^61036 generations, far longer
 than the ten million samples in the test.
 
+etaustmplt.c contains the same template test as in the etaus
+repository.  The etaus uniform random number generator is used
+in this test.  This test passes the chi square test, and does not
+produce a wrap-around error.  The period length of the etaus
+generator approximates 1.2 * 10^61036 generations, far longer
+than the ten million samples in the test.
+
 gsltmplt.c contains template tests of all the GNU Scientific
 Library random number generators.  The parameter for this
 program is a name of a generator.  To see a list of GSL

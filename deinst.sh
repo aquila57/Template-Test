@@ -1,7 +1,9 @@
 #!/bin/bash
 make -f eegllib.mak clean
+make -f etauslib.mak clean
 make -f libtmplt.mak clean
 make -f tmplt.mak clean
+make -f etaustmplt.mak clean
 make -f gsltmplt.mak clean
 make -f dietmplt.mak clean
 make -f fibotmplt.mak clean
