@@ -31,6 +31,8 @@ OBJ=bld_maxint.o \
 	shwactual.o \
 	shwlist.o \
 	shwqueue.o \
+	ckalf.o \
+	alfchisq.o \
 	tally.o
 
 CC=gcc
@@ -83,6 +85,12 @@ shwlist.o:			shwlist.c
 
 shwqueue.o:			shwqueue.c
 		$(CC) $(CFLAGS) shwqueue.c
+
+ckalf.o:			ckalf.c
+		$(CC) $(CFLAGS) ckalf.c
+
+alfchisq.o:			alfchisq.c
+		$(CC) $(CFLAGS) alfchisq.c
 
 tally.o:			tally.c
 		$(CC) $(CFLAGS) tally.c

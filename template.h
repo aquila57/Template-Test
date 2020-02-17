@@ -36,6 +36,10 @@
 
 #define SMPLS (10000000)
 
+/* modulus used in srndtmplt.c */
+
+#define MOD 1000000000
+
 /* template size is large enough, so that it should never */
 /* be completely matched.                                 */
 /* To completely match the template, conduct a separate   */
@@ -80,8 +84,13 @@ typedef struct xxstruct {
    qfmt *lsttail;           /* tail of the sample   queue */
    gsl_rng_type *typ;      /* GSL random generator type   */
    gsl_rng *rng;           /* GSL random number generator */
+   char alf[256];              /* ASCII alfabet */
+   int alflen;                 /* length of alfabet */
    int eofsw;                  /* end of file switch */
    int generator;              /* Dieharder generator number */
+   int state[55];              /* Knuth subrand state */
+   int si;                     /* index into state[] */
+   int sj;                     /* index into state[] */
    unsigned int dttk;          /* date,time,ticks */
    unsigned int count;         /* token count */
    unsigned int fibonum1;      /* fibonacci seed */
@@ -94,6 +103,7 @@ typedef struct xxstruct {
    unsigned int minor;         /* low  order LFSR */
    unsigned int out;           /* LFSR output bit */
    unsigned int lowbit;        /* low bit of lfsr0 */
+   double modulus;             /* 32 bit modulus 2^32 */
    double onepi;               /* constant value of M_PI */
    double maxint;              /* double precision MAXINT */
    double dbllmt;              /* double precision 2^BITS */
@@ -154,3 +164,15 @@ int getbyte(void);
 
 /* free all allocated memory */
 void freeall(xxfmt *xx);
+
+/* Knuth subrand generator initialization routine */
+void subrand_seed(xxfmt *xx, int p1);
+
+/* Knuth subrand generator */
+int subrand(xxfmt *xx);
+
+/* validate alfabet in alftmplt.c */
+int ckalf(xxfmt *xx);
+
+/* Chi square test for alftmplt.c */
+void alfchisq(xxfmt *xx);

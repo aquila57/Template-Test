@@ -12,3 +12,4 @@ make -f lfsr16.mak
 make -f sintmplt.mak
 make -f randu.mak
 make -f randu16.mak
+make -f alftmplt.mak

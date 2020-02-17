@@ -123,6 +123,30 @@ the 10 million samples in this test.
 
 --------
 
+Alphabet template test using the etaus random number generator
+
+Run alftmplt to apply the template test to the etaus
+uniform random number generator with an alphabet provided
+as an input parameter.
+
+./alftmplt alfabet 
+
+Where alphabet is 2 to 72 letters in length.
+
+Example,
+
+./alftmplt pqrst
+
+In this example, the alphabet is the 5 letters pqrst.
+Each letter must be unique and printable.
+
+This test is expected to pass the chi square test and not
+to wrap around.  The period length of the etaus generator
+approximates 1.2 * 10^61036 generations.  That is longer than
+the 10 million samples in this test.
+
+--------
+
 GNU Scientific Library random number generators
 
 Run gsltmplt.sh to apply the template test to the GNU Scientific

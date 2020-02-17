@@ -63,6 +63,13 @@ produce a wrap-around error.  The period length of the etaus
 generator approximates 1.2 * 10^61036 generations, far longer
 than the ten million samples in the test.
 
+alftmplt.c uses the etaus random number generator to create
+a template from an alphabet parameter, and then selects 10
+million overlapping letters from the same alphabet at random
+to match against the template.  Alftmplt passes the chi square
+test at the end.  As expected, the longer the alphabet, the
+fewer the degrees of freedom there are in the chi square test.
+
 gsltmplt.c contains template tests of all the GNU Scientific
 Library random number generators.  The parameter for this
 program is a name of a generator.  To see a list of GSL

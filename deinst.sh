@@ -12,3 +12,4 @@ make -f lfsr16.mak clean
 make -f sintmplt.mak clean
 make -f randu.mak clean
 make -f randu16.mak clean
+make -f alftmplt.mak clean
